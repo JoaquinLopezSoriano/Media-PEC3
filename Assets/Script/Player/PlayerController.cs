@@ -48,7 +48,6 @@ namespace Script.Player
             _accelerationSpeed = Random.Range(maxAcceleration / 2, maxAcceleration); 
         }
 
-
         // Update is called once per frame
         void Update()
         {
@@ -69,9 +68,11 @@ namespace Script.Player
         //movement
         private void Movement()
         {
+            
             // converts move input to a world space vector based on our character's transform orientation
             Vector2 move = _inputHandler.GetMoveInput();
-            
+            Vector3 inputDirection = new Vector3(move.x, 0.0f, move.y).normalized;
+
             if (move.Equals(Vector2.zero))
             {
                 _animationBlend = 0;
@@ -79,20 +80,18 @@ namespace Script.Player
             }
             else
             {
-                Vector3 inputDirection = new Vector3(move.x, 0.0f, move.y).normalized;
                 _speed = Mathf.Lerp(_speed, _movementSpeed,
                     _accelerationSpeed * Time.fixedTime);
                 // move the player
                 Quaternion toRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RotationVelocity * Time.deltaTime); 
-                _controller.Move(inputDirection * (_speed * Time.deltaTime));
 
             }
-            
+            _controller.Move(inputDirection * (_speed * Time.deltaTime));
+
             //animation
             _animationBlend = Mathf.Lerp(_animationBlend, _speed,Time.fixedTime * _accelerationSpeed);
             _animator.SetFloat(Constant.Animation.SPEED, _animationBlend);
-          
         }
         
         private void Action(string action)
