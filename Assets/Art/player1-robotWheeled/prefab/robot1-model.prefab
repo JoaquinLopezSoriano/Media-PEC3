@@ -570,9 +570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d075f6ea117e51649b874e73e22bd7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walk: 1
-  sprint: 3
-  maxAcceleration: 10
+  walk: 1.5
+  sprint: 4
+  maxAcceleration: 15
   delayBetweenActions: 0.5
 --- !u!54 &1848892221556024372
 Rigidbody:
