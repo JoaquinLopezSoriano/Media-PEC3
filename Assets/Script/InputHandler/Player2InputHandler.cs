@@ -9,7 +9,7 @@ namespace Script.InputHandler
             m_Move = m_playerInput.Player2.Move;
             m_Attack = m_playerInput.Player2.Attack;
             m_Defense = m_playerInput.Player2.Defense;
-            m_Pause = m_playerInput.Player2.Pause;
+            m_Exit = m_playerInput.Player2.Exit;
         }
         
     }

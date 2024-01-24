@@ -1,5 +1,6 @@
 using Script.Game;
 using Script.InputHandler;
+using UnityEditor;
 using UnityEngine;
 
 namespace Script.Player
@@ -22,10 +23,17 @@ namespace Script.Player
         [Tooltip("Minimum duration between two actions")][Range(0, 2)]
         [SerializeField] private float delayBetweenActions = 0.5f;
         
+        [Header("Audio")] 
+        [Tooltip("Movement")]
+        [SerializeField] private AudioClip audioWalk;
+        [SerializeField] private AudioClip audioAtack;
+        [SerializeField] private AudioClip audioDefense;
+        
         // script classes
         private Animator _animator;
         private CharacterController _controller;
         private PlayerInputHandler _inputHandler;
+        private AudioSource _audioSource;
     
         //variables
         private float _speed;
@@ -34,7 +42,7 @@ namespace Script.Player
         private float _animationBlend;      // speed of the animation
         private Vector3 _destinationPoint;  // point to go to
         private const float RotationVelocity = 360;
-        private float _lastTimeAction;
+        private float _lastTimeAction;      // the last time it did an action
 
         private void Awake()
         {
@@ -42,6 +50,7 @@ namespace Script.Player
             _animator = GetComponent<Animator>();
             _controller = GetComponent<CharacterController>();
             _inputHandler = GetComponent<PlayerInputHandler>();
+            _audioSource = GetComponent<AudioSource>();
             // max speed between the walk and the sprint value
             _movementSpeed = Random.Range(walk, sprint);
             // max acceleration between half the acceleration and the acceleration value
@@ -56,12 +65,17 @@ namespace Script.Player
             {
                 if (_inputHandler.GetAttackInputPressed())
                 {
-                    Action(Constant.Animation.ATTACK);
+                    Action(Constant.Animation.ATTACK, audioAtack);
                 }
                 else if (_inputHandler.GetDefensenputPressed())
                 {
-                    Action(Constant.Animation.DEFENSE);
+                    Action(Constant.Animation.DEFENSE, audioDefense);
                 }
+            }
+
+            if (_inputHandler.GetExitPressed())
+            {
+                Exit();
             }
         }
 
@@ -71,33 +85,49 @@ namespace Script.Player
             
             // converts move input to a world space vector based on our character's transform orientation
             Vector2 move = _inputHandler.GetMoveInput();
-            Vector3 inputDirection = new Vector3(move.x, 0.0f, move.y).normalized;
 
             if (move.Equals(Vector2.zero))
             {
                 _animationBlend = 0;
                 _speed = 0;
+                _audioSource.Stop();
             }
             else
             {
+                if (!_audioSource.isPlaying)    // play the audio
+                {
+                    _audioSource.clip = audioWalk;
+                    _audioSource.Play();
+                }
+                Vector3 inputDirection = new Vector3(move.x, 0.0f, move.y).normalized;
                 _speed = Mathf.Lerp(_speed, _movementSpeed,
                     _accelerationSpeed * Time.fixedTime);
                 // move the player
                 Quaternion toRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, RotationVelocity * Time.deltaTime); 
-
+                _controller.Move(inputDirection * (_speed * Time.deltaTime));
             }
-            _controller.Move(inputDirection * (_speed * Time.deltaTime));
 
             //animation
             _animationBlend = Mathf.Lerp(_animationBlend, _speed,Time.fixedTime * _accelerationSpeed);
             _animator.SetFloat(Constant.Animation.SPEED, _animationBlend);
         }
         
-        private void Action(string action)
+        private void Action(string action, AudioClip audioClip)
         {
-            _animator.SetTrigger(action);
-            _lastTimeAction = Time.time;
+            _animator.SetTrigger(action);   // execute the animation
+            _lastTimeAction = Time.time;    // reset the time
+            _audioSource.clip = audioClip;  // play the audio
+            _audioSource.Play();
+        }
+        
+        //Quit the game
+        public void Exit()
+        {
+            #if UNITY_EDITOR
+                EditorApplication.isPlaying = false;
+            #endif
+            Application.Quit();
         }
 
     }

@@ -9,7 +9,7 @@ namespace Script.InputHandler
         protected InputAction m_Move;
         protected InputAction m_Attack;
         protected InputAction m_Defense;
-        protected InputAction m_Pause;
+        protected InputAction m_Exit;
 
         protected void Awake()
         {
@@ -23,9 +23,6 @@ namespace Script.InputHandler
             Cursor.visible = false;
         }
         
-        public InputAction Pause => m_Pause;
-
-
         public Vector2 GetMoveInput()
         {
             return m_Move.ReadValue<Vector2>();
@@ -40,6 +37,11 @@ namespace Script.InputHandler
         public bool GetDefensenputPressed()
         {
             return m_Defense.triggered;
+        }
+        
+        public bool GetExitPressed()
+        {
+            return m_Exit.triggered;
         }
     }
     

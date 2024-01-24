@@ -55,7 +55,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pause"",
+                    ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""369b6169-e6c2-4e9a-96f7-589220efa715"",
                     ""expectedControlType"": ""Button"",
@@ -160,7 +160,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Pause"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -171,18 +171,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d1c61d7a-b221-4a19-acfd-ce8b4e1c3b54"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Pause"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -242,7 +231,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pause"",
+                    ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""add4a5d5-0a0e-4eb0-a9b7-d830b797624f"",
                     ""expectedControlType"": ""Button"",
@@ -347,7 +336,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Pause"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -358,18 +347,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3908a6ec-3341-492e-8c9e-675b0484f171"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Pause"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -982,13 +960,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player1_Move = m_Player1.FindAction("Move", throwIfNotFound: true);
         m_Player1_Attack = m_Player1.FindAction("Attack", throwIfNotFound: true);
         m_Player1_Defense = m_Player1.FindAction("Defense", throwIfNotFound: true);
-        m_Player1_Pause = m_Player1.FindAction("Pause", throwIfNotFound: true);
+        m_Player1_Exit = m_Player1.FindAction("Exit", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_Move = m_Player2.FindAction("Move", throwIfNotFound: true);
         m_Player2_Attack = m_Player2.FindAction("Attack", throwIfNotFound: true);
         m_Player2_Defense = m_Player2.FindAction("Defense", throwIfNotFound: true);
-        m_Player2_Pause = m_Player2.FindAction("Pause", throwIfNotFound: true);
+        m_Player2_Exit = m_Player2.FindAction("Exit", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1065,7 +1043,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player1_Move;
     private readonly InputAction m_Player1_Attack;
     private readonly InputAction m_Player1_Defense;
-    private readonly InputAction m_Player1_Pause;
+    private readonly InputAction m_Player1_Exit;
     public struct Player1Actions
     {
         private @PlayerInput m_Wrapper;
@@ -1073,7 +1051,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player1_Move;
         public InputAction @Attack => m_Wrapper.m_Player1_Attack;
         public InputAction @Defense => m_Wrapper.m_Player1_Defense;
-        public InputAction @Pause => m_Wrapper.m_Player1_Pause;
+        public InputAction @Exit => m_Wrapper.m_Player1_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1092,9 +1070,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Defense.started += instance.OnDefense;
             @Defense.performed += instance.OnDefense;
             @Defense.canceled += instance.OnDefense;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(IPlayer1Actions instance)
@@ -1108,9 +1086,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Defense.started -= instance.OnDefense;
             @Defense.performed -= instance.OnDefense;
             @Defense.canceled -= instance.OnDefense;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(IPlayer1Actions instance)
@@ -1135,7 +1113,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2_Move;
     private readonly InputAction m_Player2_Attack;
     private readonly InputAction m_Player2_Defense;
-    private readonly InputAction m_Player2_Pause;
+    private readonly InputAction m_Player2_Exit;
     public struct Player2Actions
     {
         private @PlayerInput m_Wrapper;
@@ -1143,7 +1121,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player2_Move;
         public InputAction @Attack => m_Wrapper.m_Player2_Attack;
         public InputAction @Defense => m_Wrapper.m_Player2_Defense;
-        public InputAction @Pause => m_Wrapper.m_Player2_Pause;
+        public InputAction @Exit => m_Wrapper.m_Player2_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Player2; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1162,9 +1140,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Defense.started += instance.OnDefense;
             @Defense.performed += instance.OnDefense;
             @Defense.canceled += instance.OnDefense;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(IPlayer2Actions instance)
@@ -1178,9 +1156,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Defense.started -= instance.OnDefense;
             @Defense.performed -= instance.OnDefense;
             @Defense.canceled -= instance.OnDefense;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(IPlayer2Actions instance)
@@ -1366,14 +1344,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnDefense(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
     public interface IPlayer2Actions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnDefense(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

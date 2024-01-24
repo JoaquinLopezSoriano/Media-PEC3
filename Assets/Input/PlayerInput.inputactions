@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Exit",
                     "type": "Button",
                     "id": "369b6169-e6c2-4e9a-96f7-589220efa715",
                     "expectedControlType": "Button",
@@ -138,7 +138,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Pause",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -149,18 +149,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d1c61d7a-b221-4a19-acfd-ce8b4e1c3b54",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Pause",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -220,7 +209,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Exit",
                     "type": "Button",
                     "id": "add4a5d5-0a0e-4eb0-a9b7-d830b797624f",
                     "expectedControlType": "Button",
@@ -325,7 +314,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Pause",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -336,18 +325,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3908a6ec-3341-492e-8c9e-675b0484f171",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Pause",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
